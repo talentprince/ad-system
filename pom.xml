@@ -4,11 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
-    <artifactId>ad-spring-cloud</artifactId>
+    <groupId>org.weyoung</groupId>
+    <artifactId>ad-spring-cloud-kotlin</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>ad-eureka</module>
+        <module>ad-gateway</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -19,8 +20,8 @@
         <kotlin.version>1.6.10</kotlin.version>
     </properties>
 
-    <name>ad-spring-cloud</name>
-    <description>Home Project</description>
+    <name>ad-spring-cloud-kotlin</name>
+    <description>Spring Cloud Home Project in Kotlin</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -29,12 +30,6 @@
     </parent>
 
     <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.22</version>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -65,12 +60,8 @@
 
     <repositories>
         <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
+            <id>mavenCentral</id>
+            <url>https://repo1.maven.org/maven2/</url>
         </repository>
     </repositories>
 
