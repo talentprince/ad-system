@@ -2,11 +2,9 @@ package org.weyoung.ad.fitler
 
 import com.netflix.zuul.ZuulFilter
 import com.netflix.zuul.context.RequestContext
-import lombok.extern.slf4j.Slf4j
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants
 import org.springframework.stereotype.Component
 
-@Slf4j
 @Component
 class PostRequestFilter : ZuulFilter() {
     override fun shouldFilter(): Boolean = true
