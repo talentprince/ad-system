@@ -11,15 +11,19 @@ data class AdCreative(
     @Column(name = "id", nullable = false)
     val id: Long = 0,
     @Column(name = "name", nullable = false)
-    val name: Int,
+    val name: String,
     @Column(name = "type", nullable = false)
     val type: Int,
     @Column(name = "material_type", nullable = false)
     val materialType: Int,
     @Column(name = "size", nullable = false)
-    val size: Int,
+    val size: Long,
+    @Column(name = "height", nullable = false)
+    val height: Int,
+    @Column(name = "width", nullable = false)
+    val width: Int,
     @Column(name = "duration", nullable = false)
-    val duration: Long,
+    val duration: Int,
     @Column(name = "audit_status", nullable = false)
     val auditStatus: Int,
     @Column(name = "user_id", nullable = false)

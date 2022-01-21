@@ -2,6 +2,7 @@ package org.weyoung.ad.service.impl
 
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import org.weyoung.ad.constant.RECORD_NOT_FOUND
 import org.weyoung.ad.constant.REQUEST_PARAM_ERROR
 import org.weyoung.ad.constant.SAME_UNIT_NAME_ERROR
@@ -26,6 +27,8 @@ class AdUnitService(
     val unitInterestRepository: AdUnitInterestRepository,
     val unitLocationRepository: AdUnitLocationRepository
 ) : IAdUnitService {
+
+    @Transactional
     override fun createUnit(request: AdUnitRequest): AdUnitResponse {
         planRepository.findByIdOrNull(request.planId) ?: throw AdException(RECORD_NOT_FOUND)
         unitRepository.findByPlanIdAndUnitName(request.planId, request.unitName) ?: throw AdException(
@@ -43,6 +46,7 @@ class AdUnitService(
         }
     }
 
+    @Transactional
     override fun createUnitKeyword(request: AdUnitKeywordRequest): AdUnitKeywordResponse {
         if (!request.unitKeywords.map { it.unitId }.idsAllExist()) {
             throw AdException(REQUEST_PARAM_ERROR)
@@ -52,6 +56,7 @@ class AdUnitService(
             .map { it.id }.let { AdUnitKeywordResponse(it) }
     }
 
+    @Transactional
     override fun createUnitInterest(request: AdUnitInterestRequest): AdUnitInterestResponse {
         if (!request.unitInterests.map { it.unitId }.idsAllExist()) {
             throw AdException(REQUEST_PARAM_ERROR)
@@ -61,6 +66,7 @@ class AdUnitService(
             .map { it.id }.let { AdUnitInterestResponse(it) }
     }
 
+    @Transactional
     override fun createUnitLocation(request: AdUnitLocationRequest): AdUnitLocationResponse {
         if (!request.unitLocations.map { it.unitId }.idsAllExist()) {
             throw AdException(REQUEST_PARAM_ERROR)

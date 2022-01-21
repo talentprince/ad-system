@@ -17,6 +17,8 @@ import java.util.*
 
 @Service
 class AdPlanService(val userRepository: AdUserRepository, val planRepository: AdPlanRepository) : IAdPlanService {
+
+    @Transactional
     override fun createPlan(request: AdPlanRequest): AdPlanResponse {
         if (request.planName == null || request.startDate == null || request.endDate == null)
             throw AdException(REQUEST_PARAM_ERROR)
