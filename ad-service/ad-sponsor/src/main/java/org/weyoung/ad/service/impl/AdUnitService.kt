@@ -8,6 +8,7 @@ import org.weyoung.ad.constant.REQUEST_PARAM_ERROR
 import org.weyoung.ad.constant.SAME_UNIT_NAME_ERROR
 import org.weyoung.ad.dao.AdPlanRepository
 import org.weyoung.ad.dao.AdUnitRepository
+import org.weyoung.ad.dao.condition.AdCreativeUnitRepository
 import org.weyoung.ad.dao.condition.AdUnitInterestRepository
 import org.weyoung.ad.dao.condition.AdUnitKeywordRepository
 import org.weyoung.ad.dao.condition.AdUnitLocationRepository
@@ -16,6 +17,7 @@ import org.weyoung.ad.entity.AdUnit
 import org.weyoung.ad.entity.condition.AdUnitInterest
 import org.weyoung.ad.entity.condition.AdUnitKeyword
 import org.weyoung.ad.entity.condition.AdUnitLocation
+import org.weyoung.ad.entity.condition.CreativeUnit
 import org.weyoung.ad.exception.AdException
 import org.weyoung.ad.service.IAdUnitService
 
@@ -25,7 +27,8 @@ class AdUnitService(
     val unitRepository: AdUnitRepository,
     val unitKeywordRepository: AdUnitKeywordRepository,
     val unitInterestRepository: AdUnitInterestRepository,
-    val unitLocationRepository: AdUnitLocationRepository
+    val unitLocationRepository: AdUnitLocationRepository,
+    val creativeUnitRepository: AdCreativeUnitRepository
 ) : IAdUnitService {
 
     @Transactional
@@ -48,7 +51,7 @@ class AdUnitService(
 
     @Transactional
     override fun createUnitKeyword(request: AdUnitKeywordRequest): AdUnitKeywordResponse {
-        if (!request.unitKeywords.map { it.unitId }.idsAllExist()) {
+        if (!request.unitKeywords.map { it.unitId }.unitIdsAllExist()) {
             throw AdException(REQUEST_PARAM_ERROR)
         }
         return request.unitKeywords.map { AdUnitKeyword(unitId = it.unitId, keyword = it.keyword) }
@@ -58,7 +61,7 @@ class AdUnitService(
 
     @Transactional
     override fun createUnitInterest(request: AdUnitInterestRequest): AdUnitInterestResponse {
-        if (!request.unitInterests.map { it.unitId }.idsAllExist()) {
+        if (!request.unitInterests.map { it.unitId }.unitIdsAllExist()) {
             throw AdException(REQUEST_PARAM_ERROR)
         }
         return request.unitInterests.map { AdUnitInterest(unitId = it.unitId, interestTag = it.interestTag) }
@@ -68,7 +71,7 @@ class AdUnitService(
 
     @Transactional
     override fun createUnitLocation(request: AdUnitLocationRequest): AdUnitLocationResponse {
-        if (!request.unitLocations.map { it.unitId }.idsAllExist()) {
+        if (!request.unitLocations.map { it.unitId }.unitIdsAllExist()) {
             throw AdException(REQUEST_PARAM_ERROR)
         }
         return request.unitLocations.map { AdUnitLocation(unitId = it.unitId, province = it.province, city = it.city) }
@@ -76,5 +79,20 @@ class AdUnitService(
             .map { it.id }.let { AdUnitLocationResponse(it) }
     }
 
-    private fun List<Long>.idsAllExist() = unitRepository.findAllById(this).size == HashSet(this).size
+    @Transactional
+    override fun createCreativeUnit(request: CreativeUnitRequest): CreativeUnitResponse {
+        if (!request.unitItems.map { it.creativeId }.creativeIdsAllExist() ||
+            !request.unitItems.map { it.unitId }.unitIdsAllExist()
+        ) {
+            throw AdException(REQUEST_PARAM_ERROR)
+        }
+        return request.unitItems.map { CreativeUnit(creativeId = it.creativeId, unitId = it.unitId) }
+            .map(creativeUnitRepository::save)
+            .map { it.id }.let { CreativeUnitResponse(it) }
+
+    }
+
+    private fun List<Long>.unitIdsAllExist() = unitRepository.findAllById(this).size == HashSet(this).size
+
+    private fun List<Long>.creativeIdsAllExist() = creativeUnitRepository.findAllById(this).size == HashSet(this).size
 }

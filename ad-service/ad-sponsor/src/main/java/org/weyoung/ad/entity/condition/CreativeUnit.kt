@@ -12,5 +12,5 @@ data class CreativeUnit(
     @Column(name = "unit_id", nullable = false)
     val unitId: Long,
     @Column(name = "creative_id", nullable = false)
-    val creativeId: String
+    val creativeId: Long
 )

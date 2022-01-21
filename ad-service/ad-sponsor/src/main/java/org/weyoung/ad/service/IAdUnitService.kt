@@ -7,4 +7,5 @@ interface IAdUnitService {
     fun createUnitKeyword(request: AdUnitKeywordRequest): AdUnitKeywordResponse
     fun createUnitInterest(request: AdUnitInterestRequest): AdUnitInterestResponse
     fun createUnitLocation(request: AdUnitLocationRequest): AdUnitLocationResponse
+    fun createCreativeUnit(request: CreativeUnitRequest): CreativeUnitResponse
 }
