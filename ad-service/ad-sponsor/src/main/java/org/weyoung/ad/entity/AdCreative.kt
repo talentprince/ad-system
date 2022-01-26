@@ -30,8 +30,8 @@ data class AdCreative(
     val userId: Long,
     @Column(name = "url", nullable = false)
     val url: String,
-    @get:Column(name = "create_time", nullable = false)
+    @Column(name = "create_time", nullable = false)
     val createTime: Date = Date(),
-    @get:Column(name = "update_time", nullable = false)
+    @Column(name = "update_time", nullable = false)
     val updateTime: Date = Date()
 )

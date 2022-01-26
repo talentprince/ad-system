@@ -1,0 +1,17 @@
+version: '3.1'
+services:
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ad_data
+    ports:
+      - "33006:3306"
+    volumes:
+      - /Users/chenchen/IdeaProjects/school.sql:/school.sql
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8888:8080

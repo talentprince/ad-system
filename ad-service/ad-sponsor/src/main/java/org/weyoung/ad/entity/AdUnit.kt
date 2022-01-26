@@ -21,8 +21,8 @@ data class AdUnit(
     val positionType: Int,
     @Column(name = "budget", nullable = false)
     val budget: Long,
-    @Column(name = "end_date", nullable = false)
+    @Column(name = "create_time", nullable = false)
     val createTime: Date = Date(),
-    @Column(name = "end_date", nullable = false)
+    @Column(name = "update_time", nullable = false)
     val updateTime: Date = Date()
 )
